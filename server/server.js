@@ -13,9 +13,12 @@ const showRouter = require("./routes/showRoute");
 const bookingRouter = require("./routes/bookingRoute");
 
 const app = express();
-app.use(express.static(path.join(__dirname, "build")));
+const clientBuildPath = path.join(__dirname, "../client/build");
+console.log(clientBuildPath);
+
+app.use(express.static(clientBuildPath));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+  res.sendFile(path.join(clientBuildPath, "index.html"));
 });
 app.use(helmet());
 app.disable("x-powered-by"); // it will remove the x-powered-by header from the response
@@ -47,6 +50,6 @@ app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-app.listen(8082, () => {
+app.listen(8081, () => {
   console.log("Server is running on port 8082");
 });
